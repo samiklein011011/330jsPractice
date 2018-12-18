@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>JavaScript Calculator</title>
+
+</head>
+
+<body>
+
+	<h1 style='color:blue'><div style='color:red; font-size:20px;'>Welcome to...</div> Sami's Magnificent JavaScript Calculator!!!! (ooohhh) (ahhhh)<div style='color:red; font-size:20px;'>Hope you have a wonderful day!!!!</div></h1>
+		<p>Number 1:</p>
+		<input type='text' name='num1' id='num1' placeholder='number 1' />
+		<p>Number 2:</p>
+		<input type='text' name='num2' id='num2' placeholder='number 2'/>
+		<br><br>
+
+		<label><input id="Add" type='radio' name='function'/>Add (+)</label><br>
+		<label><input id="Subtract" type='radio' name='function'  />Subtract (-)</label><br>
+		<label><input id="Multiply" type='radio' name='function' />Multiply (*)</label><br>
+		<label><input id="Divide" type='radio' name='function' />Divide (/)</label><br>
+
+
+		<p id='result'>Result: <p>
+
+	<script>
+
+    		document.getElementById("num1").addEventListener("keyup", whichOp);
+    		document.getElementById("num2").addEventListener("keyup", whichOp);
+			document.getElementById('Add').addEventListener("click", whichOp, false);
+    		document.getElementById('Subtract').addEventListener("click", whichOp, false);
+    		document.getElementById('Multiply').addEventListener("click", whichOp, false);
+    		document.getElementById('Divide').addEventListener("click", whichOp, false);
+
+		function whichOp(){
+			// console.log("in which op function");
+			let operation_radio_pointers = document.getElementsByName('function');
+			let which_operation = null;
+			for(let i=0; i<operation_radio_pointers.length; i++){
+				if(operation_radio_pointers[i].checked){
+					which_operation = i;
+					break;
+				}
+			}
+			let num1 = parseInt(document.getElementById('num1').value);
+			let num2 = parseInt(document.getElementById('num2').value);
+			console.log(num1);
+			console.log(num2);
+			// console.log("which operation:" + which_operation);
+			if(which_operation == '0'){
+				let result = num1+num2;
+				document.getElementById('result').innerHTML ="Result: " + result;
+			}
+			if(which_operation == '1'){
+				let result = num1-num2;
+				document.getElementById('result').innerHTML ="Result: " + result;
+			}
+			if(which_operation == '2'){
+				let result = num1*num2;
+				document.getElementById('result').innerHTML ="Result: " + result;
+			}
+			if(which_operation == '3'){
+				if(num2 == 0){
+					document.getElementById('result').innerHTML ="You cannot divide by 0, silly!";
+				}
+				if(num2 != 0){
+					let result = num1/num2;
+					document.getElementById('result').innerHTML ="Result: " + result;
+				}
+
+			}
+		}
+
+	</script>
+
+</body>

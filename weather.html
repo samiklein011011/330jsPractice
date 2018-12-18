@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather Widget</title>
+	<link rel="stylesheet" href="http://classes.engineering.wustl.edu/cse330/content/weather.css">
+
+</head>
+<body>
+	<p> BELOW IS SAMI'S WEATHER WIDGET!</p>
+	<button id="getWeather">Reload Weather</button>
+	<br><br><br>
+
+	<div class="weather" id="weatherWidget">
+	<div class="weather-loc"></div>
+	<div class="weather-humidity"></div>
+	<div class="weather-temp"></div>
+	<img class="weather-tomorrow" />
+	<img class="weather-dayaftertomorrow" /></div>
+
+
+	<script>
+
+	function fetchWeather(){
+		//AJAX request to the weather server
+		fetch('https://classes.engineering.wustl.edu/cse330/content/weather_json.php', {
+			method: 'GET'
+		})
+		.then(res => res.json())
+		.then(response => {
+			console.log('Success:', JSON.stringify(response))
+
+			//LOCATION
+			let locationClass = document.querySelector(".weather-loc");
+			let cityResponse = response.location.city;
+			let stateResponse = response.location.state;
+			locationClass.innerHTML = "<strong>"+cityResponse+"</strong>"+ ", " + stateResponse;
+			// const blah = document.getElementByClassName("weather-loc")[0];
+
+			let humidityClass = document.querySelector(".weather-humidity");
+			let humidityResponse = response.atmosphere.humidity;
+			humidityClass.innerHTML= humidityResponse;
+
+			let currentTempClass = document.querySelector(".weather-temp");
+			let currentTempResponse = response.current.temp;
+			currentTempClass.innerHTML= currentTempResponse;
+
+			let tomorrowClass = document.querySelector(".weather-tomorrow");
+			let tomorrowCode = response.tomorrow.code;
+			let url='http://us.yimg.com/i/us/nws/weather/gr/'+tomorrowCode+'ds.png';
+			tomorrowClass.src= url;
+
+			let dayAfterClass = document.querySelector(".weather-dayaftertomorrow");
+			let dayAfterCode = response.dayafter.code;
+			let url2='http://us.yimg.com/i/us/nws/weather/gr/'+dayAfterCode+'ds.png';
+			dayAfterClass.src= url2;
+
+
+		})
+		.catch(err => console.log(err));
+
+	}
+	document.addEventListener("DOMContentLoaded", fetchWeather, false);
+	document.getElementById("getWeather").addEventListener("click", fetchWeather, false);
+
+	</script>
+
+</body>
+</html>
